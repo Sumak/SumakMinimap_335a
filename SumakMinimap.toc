@@ -1,0 +1,17 @@
+﻿## Interface: 30300
+## Title: |cffFF5821SumakMinimap|r
+## Title-ruRU: |cffFF5821SumakMinimap|r
+## Notes: "SumakMinimap"
+## Notes-ruRU: "SumakMinimap"
+## Author: Sumak
+## Version: 0.0.0R002
+## X-Category: Minimap
+## X-eMail: sumak.serge.m@gmail.com
+
+
+core\init.lua
+core\variable.lua
+core\reloadui.lua
+media\media.lua
+core\frames.lua
+SumakMinimap.lua
