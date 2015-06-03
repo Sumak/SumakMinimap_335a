@@ -4,7 +4,7 @@
 ## Notes: "SumakMinimap"
 ## Notes-ruRU: "SumakMinimap"
 ## Author: Sumak
-## Version: 0.0.0R003
+## Version: 1.0.R004
 ## X-Category: Minimap
 ## X-eMail: sumak.serge.m@gmail.com
 
