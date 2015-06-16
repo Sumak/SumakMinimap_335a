@@ -13,20 +13,14 @@ Minimap : SetScale(1)
 Minimap : SetPlayerTexture (CFG.media.minimaparrow)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
-FCV.backdrop = {
-	bgFile = CFG.media.bgfile,
-	--edgeFile = CFG.media.blank,
-	title = false,
-	tileSize = 0,
-	edgeSize = 0,
-	insets ={
-		left = 0,
-		right = 0,
-		top = 0,
-		bottom = 0
-	}
 
-}
+//add slash commnd 
+SlashCmdList ["RESETMINIMAP"] = function () 
+    Minimap : SetUserPlaced (false)
+    ReloadUI ()
+end
+
+
 ---- Config end
 -------------------------------------------------
 local function echo(str) print('|cfffef00fSumakMinimap |cff82e2eb' .. (str or '')) end
@@ -202,22 +196,6 @@ Minimap : SetScript ("OnDragStart",
 Minimap : SetScript ("OnDragStop", 
 	function (self) self : StopMovingOrSizing () end)
 Minimap : SetUserPlaced (true)
-SlashCmdList ["RESETMINIMAP"] = function () 
-    Minimap : SetUserPlaced (false)
-    ReloadUI ()
-end
-
-------------------------------------------
--- destroy function
-FCV.kill = function(self, donthide, point)
-	if not self then return end
-	if self.UnregisterAllEvents then self:UnregisterAllEvents() end
-	if self.SetPoint and not(point) then self.SetPoint = FCV.null end
-	if self.Show then self.Show = FCV.null end
-	if not donthide then self:Hide() end
-	if self.Hide then self.Hide = FCV.null end
-end
-------------------------------------------
 
 ------------------------------------------
 -- Time

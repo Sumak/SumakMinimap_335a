@@ -3,6 +3,21 @@
 ------------------------------------------------------------------------
 local FCV, CFG = unpack(select(2, ...))
 
+FCV.backdrop = {
+	bgFile = CFG.media.bgfile,
+	--edgeFile = CFG.media.blank,
+	title = false,
+	tileSize = 0,
+	edgeSize = 0,
+	insets ={
+		left = 0,
+		right = 0,
+		top = 0,
+		bottom = 0
+	}
+
+}
+
 -- Style Frame
 FCV.style = function (myframe,nobg,offset)
 	

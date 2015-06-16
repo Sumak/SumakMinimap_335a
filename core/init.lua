@@ -44,12 +44,3 @@ FCV.patch, FCV.buildtext, FCV.releasedate, FCV.toc = GetBuildInfo()
 FCV.build = tonumber(FCV.buildtext)
 FCV.level = UnitLevel("player")
 FCV.myrealm = GetRealmName()
-
-
--- Kill function.
-dummy = function() return end
-function Kill(object)
-	object.Show = dummy
-	object:SetAlpha(0)
-	object:Hide()
-end
