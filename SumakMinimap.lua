@@ -14,7 +14,9 @@ Minimap : SetPlayerTexture (CFG.media.minimaparrow)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
 
-//add slash commnd 
+---- Config end
+-------------------------------------------------
+----add slash commnd 
 SlashCmdList ["RESETMINIMAP"] = function () 
     Minimap : SetUserPlaced (false)
     ReloadUI ()
@@ -30,7 +32,7 @@ Minimap : SetPoint (anchor_point, UIParent, x, y)
 GameTimeFrame : Hide()
 
 -------------------------------------------------
----- подложка под минимапу
+---- The frame for minimap
 local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", false, false, false)
 	minimapframe : SetPoint ("TOPLEFT", -4, 4)
 	minimapframe : SetPoint ("BOTTOMRIGHT", 4, -4)
@@ -49,9 +51,9 @@ local m_zone_text = FCV.setfontstring (m_zone, 5, nil, nil, "CENTER")
 
 -------------------------------------------------
 ---- The frame for coordinates
-local m_coord = FCV.frame ("m_coord", minimapframe, 1, "LOW", true, true, true)
-	m_coord : SetSize (50, 24)
-	m_coord : SetPoint ("BOTTOM", minimap_size/4, 1)
+local m_coord = FCV.frame ("m_coord", minimapframe, 1, "LOW", false, false, false)
+	m_coord : SetSize (50, 20)
+	m_coord : SetPoint ("TOPRIGHT", minimapframe, "BOTTOMRIGHT", 0, -6)
 
 local m_coord_text = FCV.setfontstring (m_coord, font_size, nil, nil, "CENTER")
 	m_coord_text : SetPoint ("CENTER", 0, 0)
@@ -101,18 +103,19 @@ local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW", true, true, true)
 	
 -------------------------------------------------
 ---- The frame for LFG
-local m_LFG = FCV.frame ("m_LFG", minimapframe, 3, "LOW", true, true, true)
+local m_LFG = FCV.frame ("m_LFG", minimapframe, 3, "LOW", false, false, false)
 	m_LFG : SetSize (24, 24)
-	m_LFG : SetPoint ("TOPRIGHT", -5, -5)
+	local lfg_point_x = minimap_size/2
+	m_LFG : SetPoint ("CENTER", Minimap, "BOTTOMLEFT", 72, -22)
 
 	-------------------------------------------------
----- Reposition lfg icon at bottom-left
+----  LFG icon on LFG-frame
 local function UpdateLFG ()
-MiniMapLFGFrame:ClearAllPoints()
-MiniMapLFGFrame:SetPoint("CENTER", m_LFG, "CENTER", 0, 0)
+MiniMapLFGFrame : ClearAllPoints()
+MiniMapLFGFrame : SetPoint("CENTER", m_LFG, "CENTER", 0, 0)
 MiniMapLFGFrame : SetParent (m_LFG)
-MiniMapLFGFrame:SetHighlightTexture(nil)
-MiniMapLFGFrameBorder:Hide()
+MiniMapLFGFrame : SetHighlightTexture(nil)
+MiniMapLFGFrameBorder : Hide()
 end
 hooksecurefunc ("MiniMapLFG_UpdateIsShown", UpdateLFG)
 
@@ -131,7 +134,7 @@ local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, 
 	m_tracking : SetSize (24, 24)
 	m_tracking : SetPoint ("TOPLEFT", 5, -5)
 
-----tracking icon location
+----Tracking icon location
 	MiniMapTracking : ClearAllPoints ()
 	MiniMapTracking : SetParent (m_tracking)
 	MiniMapTracking : SetScale (1)
@@ -139,7 +142,7 @@ local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, 
 -------------------------------------------------
 
 -------------------------------------------------
----- левая панель для минимапы
+---- MiniMapInstanceDifficulty frame
 local minimap_ID = FCV.frame ("minimap_ID", minimapframe, 5, "LOW", true, true, true)
 minimap_ID : SetSize (40, 40)
 minimap_ID : ClearAllPoints ()
@@ -203,10 +206,16 @@ if not IsAddOnLoaded("Blizzard_TimeManager") then
 	LoadAddOn("Blizzard_TimeManager")
 end
 
+-- Timeframe
+local m_clockframe = FCV.frame ("m_coord", minimapframe, 1, "BACKGROUND", false, false, false)
+	m_clockframe : SetSize (50, 20)
+	m_clockframe : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
+--
 local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 	clockFrame : Hide () ;	-- kill clock frame
 	clockTime : SetFont (CFG.media.uffont, font_size)
-	TimeManagerClockButton : SetPoint ("CENTER", minimapframe, "BOTTOM", -minimap_size/4, 12)
+	TimeManagerClockButton : SetPoint ("CENTER", m_clockframe, 0, 0)
+	--TimeManagerClockButton : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
 	TimeManagerClockButton : SetScript ("OnMouseDown", function(_,click)
 		if click == "RightButton" then
 		if not CalendarFrame then
