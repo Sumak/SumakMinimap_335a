@@ -11,7 +11,7 @@
 
 core\init.lua
 core\variable.lua
-core\reloadui.lua
+core\slash.lua
 media\media.lua
 core\frames.lua
 SumakMinimap.lua
