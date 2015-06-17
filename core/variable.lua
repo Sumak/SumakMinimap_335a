@@ -12,3 +12,20 @@ CFG.territory_colors = {
 	["contested"] = {1.0, 0.7, 0.0},
 	["none"] = {0.1, 1.0, 0.1},
 }
+
+FCV.dummy = function() return end
+FCV.myname = select(1, UnitName("player"))
+FCV.myclass = select(2, UnitClass("player"))
+FCV.myrace = select(2, UnitRace("player"))
+FCV.myfaction = UnitFactionGroup("player")
+FCV.client = GetLocale() 
+FCV.resolution = GetCVar("gxResolution")
+FCV.screenheight = tonumber(string.match(FCV.resolution, "%d+x(%d+)"))
+FCV.screenwidth = tonumber(string.match(FCV.resolution, "(%d+)x+%d"))
+FCV.version = GetAddOnMetadata("SumakMinimap", "Version")
+FCV.versionnumber = tonumber(FCV.version)
+FCV.incombat = UnitAffectingCombat("player")
+FCV.patch, FCV.buildtext, FCV.releasedate, FCV.toc = GetBuildInfo()
+FCV.build = tonumber(FCV.buildtext)
+FCV.level = UnitLevel("player")
+FCV.myrealm = GetRealmName()
