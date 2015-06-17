@@ -4,10 +4,12 @@
 local FCV, CFG = unpack(select(2, ...))
 
 local minimap_size = 144
+local minimap_font = CFG.media.uffont
 local font_size = 13
 local anchor_point = 'TOPRIGHT' 
 local x = -25
 local y = -40
+local Minimap = Minimap
 
 Minimap : SetScale(1)
 Minimap : SetPlayerTexture (CFG.media.minimaparrow)
@@ -44,7 +46,7 @@ local m_zone = FCV.frame ("m_zone", minimapframe, 1, "BACKGROUND", false, false,
 	m_zone : SetPoint ("TOPLEFT", 0, 26)
 
 local m_zone_text = FCV.setfontstring (m_zone, 5, nil, nil, "CENTER")
-	m_zone_text : SetFont (CFG.media.uffont, font_size)
+	m_zone_text : SetFont (minimap_font, font_size)
 	m_zone_text : SetPoint ("Center", m_zone, 0, 0)
 	m_zone_text : SetJustifyH ("CENTER")
 	m_zone_text : SetJustifyV ("CENTER")
@@ -69,7 +71,7 @@ local coord_Update = function (self, t)
 	x = math.floor (100 * x)
 	y = math.floor (100 * y)
 	if x == 0 and y == 0 then
-		m_coord_text : SetText("X _ X")
+		m_coord_text : SetText("X_X")
 	else
 		if x < 10 then
 			xt = "0"..x
@@ -170,7 +172,6 @@ m_zone : SetScript ("OnEvent", zone_Update)
 ---- zone frame //
 -------------------------------------------------
 
-Minimap : SetScale(1)
 Minimap : SetSize (minimap_size, minimap_size)
 Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
 Minimap : SetFrameStrata("BACKGROUND")
@@ -213,7 +214,7 @@ local m_clockframe = FCV.frame ("m_coord", minimapframe, 1, "BACKGROUND", false,
 --
 local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 	clockFrame : Hide () ;	-- kill clock frame
-	clockTime : SetFont (CFG.media.uffont, font_size)
+	clockTime : SetFont (minimap_font, font_size)
 	TimeManagerClockButton : SetPoint ("CENTER", m_clockframe, 0, 0)
 	--TimeManagerClockButton : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
 	TimeManagerClockButton : SetScript ("OnMouseDown", function(_,click)
