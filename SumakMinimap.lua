@@ -15,20 +15,37 @@ Minimap : SetScale(1)
 Minimap : SetPlayerTexture (CFG.media.minimaparrow)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
+-----
+addon_version = FCV.addon_version
 
 ---- Config end
--------------------------------------------------
+
 ----add slash commnd 
+-------------------------------------------------
+
 SlashCmdList ["RESETMINIMAP"] = function () 
     Minimap : SetUserPlaced (false)
     ReloadUI ()
 end
 
-
----- Config end
+---- Addon Info
 -------------------------------------------------
-local function echo(str) print('|cfffef00fSumakMinimap |cff82e2eb' .. (str or '')) end
+-- local function echo(str) 
+	-- print('|cfffef00fSumakMinimap |cff82e2eb' .. (str or '')) 
+	-- print('|cfffef00Memory used:' .. (str or '')) 
+	
+-- end
+-- local function echo(str) print('|cfffef00f |cff82e2eb' .. (str or '')) end
 
+local function printAddonInfo ()
+	mem = GetAddOnMemoryUsage("SumakMinimap")
+	print('|cfffef00fSumakMinimap |cff82e2eb' .. (addon_version or '')) 
+	print('|cfffef00Memory used:' .. (mem or '')) 
+end
+
+
+-------------------------------------------------
+---- minimap location
 Minimap : ClearAllPoints()
 Minimap : SetPoint (anchor_point, UIParent, x, y)
 GameTimeFrame : Hide()
@@ -270,7 +287,8 @@ Minimap : SetScript("OnMouseUp", function(self, button)
 end)
   
  if IsAddOnLoaded("SumakMinimap") then
-	echo ('Версия '.. GetAddOnMetadata ('SumakMinimap', 'Version') .. ' by Sumak ')
+	printAddonInfo ()
+	--echo ('Версия '.. GetAddOnMetadata ('SumakMinimap', 'Version') .. ' by Sumak ')
 end
  
  ------------------------------------------
