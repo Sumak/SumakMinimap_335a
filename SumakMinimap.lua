@@ -30,17 +30,12 @@ end
 
 ---- Addon Info
 -------------------------------------------------
--- local function echo(str) 
-	-- print('|cfffef00fSumakMinimap |cff82e2eb' .. (str or '')) 
-	-- print('|cfffef00Memory used:' .. (str or '')) 
-	
--- end
--- local function echo(str) print('|cfffef00f |cff82e2eb' .. (str or '')) end
 
 local function printAddonInfo ()
-	mem = GetAddOnMemoryUsage("SumakMinimap")
+	mem_usd = GetAddOnMemoryUsage("SumakMinimap")
+	mem = format("%.2f", mem_usd).." kB"
 	print('|cfffef00fSumakMinimap |cff82e2eb' .. (addon_version or '')) 
-	print('|cfffef00Memory used:' .. (mem or '')) 
+	print('|cfffef00fMemory used: |cff82e2eb' .. (mem or '')) 
 end
 
 
@@ -52,13 +47,13 @@ GameTimeFrame : Hide()
 
 -------------------------------------------------
 ---- The frame for minimap
-local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", false, false, false)
+local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", true, true, true)
 	minimapframe : SetPoint ("TOPLEFT", -4, 4)
 	minimapframe : SetPoint ("BOTTOMRIGHT", 4, -4)
 
 -------------------------------------------------
 ---- The frame for zone
-local m_zone = FCV.frame ("m_zone", minimapframe, 1, "BACKGROUND", false, false, false)
+local m_zone = FCV.frame ("m_zone", minimapframe, 1, "BACKGROUND", true, true, true)
 	m_zone : SetSize (minimap_size+8, 20)
 	m_zone : SetPoint ("TOPLEFT", 0, 26)
 
@@ -70,7 +65,7 @@ local m_zone_text = FCV.setfontstring (m_zone, 5, nil, nil, "CENTER")
 
 -------------------------------------------------
 ---- The frame for coordinates
-local m_coord = FCV.frame ("m_coord", minimapframe, 1, "LOW", false, false, false)
+local m_coord = FCV.frame ("m_coord", minimapframe, 1, "LOW", true, true, true)
 	m_coord : SetSize (50, 20)
 	m_coord : SetPoint ("TOPRIGHT", minimapframe, "BOTTOMRIGHT", 0, -6)
 
@@ -110,7 +105,7 @@ m_coord : SetScript("OnUpdate", coord_Update)
 	
 -------------------------------------------------
 ---- The frame for mail
-local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW", true, true, true)
+local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW")
 	m_mail : SetSize (24, 24)
 	m_mail : SetPoint ("TOP", 0, -5)
 	MiniMapMailFrame : ClearAllPoints()
@@ -122,7 +117,7 @@ local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW", true, true, true)
 	
 -------------------------------------------------
 ---- The frame for LFG
-local m_LFG = FCV.frame ("m_LFG", minimapframe, 3, "LOW", false, false, false)
+local m_LFG = FCV.frame ("m_LFG", minimapframe, 3, "LOW", true, true, true)
 	m_LFG : SetSize (24, 24)
 	local lfg_point_x = minimap_size/2
 	m_LFG : SetPoint ("CENTER", Minimap, "BOTTOMLEFT", 72, -22)
@@ -149,7 +144,7 @@ local m_BG = FCV.frame ("m_BG", minimapframe, 3, "LOW", true, true, true)
 
 	-------------------------------------------------
 ---- Tracking icon frame
-local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, true)
+local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW")
 	m_tracking : SetSize (24, 24)
 	m_tracking : SetPoint ("TOPLEFT", 5, -5)
 
@@ -162,7 +157,7 @@ local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, 
 
 -------------------------------------------------
 ---- MiniMapInstanceDifficulty frame
-local minimap_ID = FCV.frame ("minimap_ID", minimapframe, 5, "LOW", true, true, true)
+local minimap_ID = FCV.frame ("minimap_ID", minimapframe, 5, "LOW")
 minimap_ID : SetSize (40, 40)
 minimap_ID : ClearAllPoints ()
 minimap_ID : SetPoint ("BOTTOMRIGHT", minimapframe, "TOPLEFT", -4, -40)
@@ -225,7 +220,7 @@ if not IsAddOnLoaded("Blizzard_TimeManager") then
 end
 
 -- Timeframe
-local m_clockframe = FCV.frame ("m_coord", minimapframe, 1, "BACKGROUND", false, false, false)
+local m_clockframe = FCV.frame ("m_clockframe", minimapframe, 1, "BACKGROUND", true, true, true)
 	m_clockframe : SetSize (50, 20)
 	m_clockframe : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
 --
@@ -242,7 +237,7 @@ local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 			CalendarFrame : Show ()
 		end
 	end)
--- Time	
+---- Timeframe	----
 ------------------------------------------
 
  
@@ -286,9 +281,9 @@ Minimap : SetScript("OnMouseUp", function(self, button)
 	end
 end)
   
- if IsAddOnLoaded("SumakMinimap") then
+if IsAddOnLoaded("SumakMinimap") then
+	UpdateAddOnMemoryUsage()
 	printAddonInfo ()
-	--echo ('Версия '.. GetAddOnMetadata ('SumakMinimap', 'Version') .. ' by Sumak ')
 end
  
  ------------------------------------------

@@ -13,3 +13,14 @@ offset - оффсет
 alpha - альфа (полупрозрачность)
 
 
+--Новая функция создания фреймов
+FCV.frame = function (f_name, parent, level, strata, bg, shadow, border, offset, alpha)
+
+f_name - имя фрейма
+parent - родитель
+level - уровень фрейма
+strata - уровень слоя (background, low, medium, hight, dialog, fullscreen, tooltip)
+bg - подложка (true - подложка есть)
+shadow - тень (true - тень есть)
+offset - оффсет - хз че это!? Удалить!
+alpha - альфа (полупрозрачность)
