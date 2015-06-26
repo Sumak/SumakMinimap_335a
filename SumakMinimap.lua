@@ -7,8 +7,8 @@ local minimap_size = 144
 local minimap_font = CFG.media.uffont
 local font_size = 13
 local anchor_point = 'TOPRIGHT' 
-local x = -25
-local y = -40
+local mmp_pos_x = -25
+local mmp_pos_y = -40
 local Minimap = Minimap
 
 Minimap : SetScale(1)
@@ -16,7 +16,7 @@ Minimap : SetPlayerTexture (CFG.media.minimaparrow)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
 -----
-addon_version = FCV.addon_version
+MinimapNorthTag:SetTexture(nil)
 
 ---- Config end
 
@@ -34,7 +34,7 @@ end
 local function printAddonInfo ()
 	mem_usd = GetAddOnMemoryUsage("SumakMinimap")
 	mem = format("%.2f", mem_usd).." kB"
-	print('|cfffef00fSumakMinimap |cff82e2eb' .. (addon_version or '')) 
+	print('|cfffef00fSumakMinimap |cff82e2eb' .. (FCV.addon_version or '')) 
 	print('|cfffef00fMemory used: |cff82e2eb' .. (mem or '')) 
 end
 
@@ -42,7 +42,7 @@ end
 -------------------------------------------------
 ---- minimap location
 Minimap : ClearAllPoints()
-Minimap : SetPoint (anchor_point, UIParent, x, y)
+Minimap : SetPoint (anchor_point, UIParent, mmp_pos_x, mmp_pos_y)
 GameTimeFrame : Hide()
 
 -------------------------------------------------
