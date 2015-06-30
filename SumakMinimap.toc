@@ -4,7 +4,7 @@
 ## Notes: Minimap for World of Warcraft
 ## Notes-ruRU: Замена стандартной миникарты
 ## Author: Sumak
-## Version: 1.0.R017
+## Version: 1.0.R018
 ## X-Category: Minimap
 ## X-eMail: sumak.serge.m@gmail.com
 

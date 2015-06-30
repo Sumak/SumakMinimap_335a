@@ -115,20 +115,15 @@ local m_LFG_BG = FCV.frame ("m_LFG_BG", minimapframe, 3, "LOW")
 ----  LFG icon on LFG-frame
 local function UpdateLFG ()
 MiniMapLFGFrame : ClearAllPoints()
-MiniMapLFGFrame : SetPoint("CENTER", m_LFG, "CENTER", 0, 0)
-MiniMapLFGFrame : SetParent (m_LFG)
+MiniMapLFGFrame : SetPoint("CENTER", m_LFG_BG, "CENTER", 0, 0)
+MiniMapLFGFrame : SetParent (m_LFG_BG)
 MiniMapLFGFrame : SetHighlightTexture(nil)
 MiniMapLFGFrameBorder : Hide()
 end
 hooksecurefunc ("MiniMapLFG_UpdateIsShown", UpdateLFG)
 
 -------------------------------------------------
----- The frame for BG
---[[
-local m_BG = FCV.frame ("m_BG", minimapframe, 3, "LOW", true, true, true)
-	m_BG : SetSize (24, 24)
-	m_BG : SetPoint ("TOPRIGHT", -5, -35)
-]]
+---- For BG
 	MiniMapBattlefieldFrame: ClearAllPoints()
 	MiniMapBattlefieldFrame : SetParent (m_LFG_BG)
 	MiniMapBattlefieldFrame : SetPoint ("CENTER", m_LFG_BG, "CENTER", 1, -2)
@@ -216,7 +211,6 @@ local m_clockframe = FCV.frame ("m_clockframe", minimapframe, 1, "BACKGROUND", t
 	m_clockframe : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
 --
 local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
---	clockFrame : Hide () ;	-- kill clock frame
 	clockTime : SetFont (minimap_font, font_size)
 	TimeManagerClockButton : SetPoint ("CENTER", m_clockframe, 0, 0)
 	--TimeManagerClockButton : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
@@ -231,14 +225,29 @@ local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 ---- Timeframe	----
 ------------------------------------------
 
+------------------------------------------	
  ---- MiniMap Config button
+ 
 local minimap_cfg = FCV.frame ("minimap_cfg", minimapframe, 5, "LOW", true, true, true )
-minimap_cfg : SetSize (20, 20)
-minimap_cfg : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 54, -6)
+	minimap_cfg : SetSize (20, 20)
+	minimap_cfg : EnableMouse(true)
+	minimap_cfg : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 54, -6)
+	minimap_cfg : SetScript ("OnEnter", function(self)
+		GameTooltip : SetOwner(self, "ANCHOR_BOTTOMLEFT")
+		GameTooltip : ClearAllPoints()
+		GameTooltip : SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -2)
+		GameTooltip : ClearLines ()
+		GameTooltip : SetText ("MiniMap config")  -- This sets the top line of text, in gold.
+		GameTooltip : AddLine ("MiniMap config в процессе \nразработки", 1, 1, 1)
+		GameTooltip : Show ()
+end)
+
+minimap_cfg : SetScript ("OnLeave", function() GameTooltip : Hide() end)
+
 local minimap_cfg_text = FCV.setfontstring (minimap_cfg, font_size, nil, nil, "CENTER")
 	minimap_cfg_text : SetPoint ("CENTER", -1, 0)
-	minimap_cfg_text : SetText ("C")
- 
+	minimap_cfg_text : SetText ("|cff00EEFFC")
+
  
 ------------------------------------------	
 -- Right click menu
@@ -302,7 +311,9 @@ FCV.kill(MiniMapBattlefieldBorder)
 FCV.kill(MiniMapTrackingBackground) -- бекграунд на трекере
 FCV.kill(MiniMapTrackingButtonBorder) -- бордер на трекере
 FCV.kill(GameTimeFrame)
+FCV.kill(clockFrame)
 MinimapNorthTag:SetTexture(nil)
+--clockFrame : Hide () ;	-- kill clock frame
 
 SLASH_RESETMINIMAP1 = "/rmmp"
 SLASH_RESETMINIMAP1 = "/resetmmp"
