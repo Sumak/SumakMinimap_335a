@@ -5,6 +5,9 @@ local FCV, CFG = unpack(select(2, ...))
 
 local minimap_size = 144
 local minimap_font = CFG.media.uffont
+local minimap_player_texture = CFG.media.minimaparrow
+local minimap_mailicon = CFG.media.mailicon
+local minimap_mask_texture = CFG.media.minimap_mask_texture
 local font_size = 13
 local anchor_point = 'TOPRIGHT' 
 local mmp_pos_x = -25
@@ -12,7 +15,7 @@ local mmp_pos_y = -40
 local Minimap = Minimap
 
 Minimap : SetScale(1)
-Minimap : SetPlayerTexture (CFG.media.minimaparrow)
+Minimap : SetPlayerTexture (minimap_player_texture)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
 Minimap : SetClampedToScreen(true)
@@ -120,7 +123,7 @@ local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW")
 	MiniMapMailFrame : ClearAllPoints()
 	MiniMapMailFrame : SetParent(m_mail)
 	MiniMapMailFrame : SetPoint('CENTER', m_mail, 'CENTER', 1, -2)
-	MiniMapMailIcon : SetTexture (CFG.media.mailicon)
+	MiniMapMailIcon : SetTexture (minimap_mailicon)
 -------------------------------------------------
 	
 -------------------------------------------------
@@ -189,7 +192,8 @@ m_zone : SetScript ("OnEvent", zone_Update)
 -------------------------------------------------
 
 Minimap : SetSize (minimap_size, minimap_size)
-Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
+Minimap : SetMaskTexture(minimap_mask_texture)
+--Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
 Minimap : SetFrameStrata("BACKGROUND")
 Minimap : SetFrameLevel(3)
 ------------------------------------------	
