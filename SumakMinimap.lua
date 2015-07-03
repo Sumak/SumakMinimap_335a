@@ -15,8 +15,7 @@ Minimap : SetScale(1)
 Minimap : SetPlayerTexture (CFG.media.minimaparrow)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
------
-
+Minimap : SetClampedToScreen(true)
 
 ---- Config end
 -------------------------------------------------
@@ -29,6 +28,25 @@ SlashCmdList ["RESETMINIMAP"] = function ()
     Minimap : SetUserPlaced (false)
     ReloadUI ()
 end
+
+
+do
+    local function GetTipAnchor(frame)
+        local x,y = frame:GetCenter()
+        if not x or not y then return "TOPLEFT", "BOTTOMLEFT" end
+        local hhalf = (x > UIParent:GetWidth() * 2/3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
+        local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
+        return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
+    end
+
+    MiniMapLFGFrame:HookScript("OnEnter", function(self, ...)
+        if LFDSearchStatus:IsShown() then
+            LFDSearchStatus:ClearAllPoints()
+            LFDSearchStatus:SetClampedToScreen(true)
+            LFDSearchStatus:SetPoint( GetTipAnchor(self) )
+        end
+    end )
+end  
 
 ---- Addon Info
 -------------------------------------------------
@@ -44,13 +62,13 @@ end
 ---- minimap location
 Minimap : ClearAllPoints()
 Minimap : SetPoint (anchor_point, UIParent, mmp_pos_x, mmp_pos_y)
-GameTimeFrame : Hide()
 
 -------------------------------------------------
 ---- The frame for minimap
 local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", true, true, true)
 	minimapframe : SetPoint ("TOPLEFT", -4, 4)
 	minimapframe : SetPoint ("BOTTOMRIGHT", 4, -4)
+	--minimapframe : SetClampedToScreen(true)
 
 -------------------------------------------------
 ---- The frame for zone
@@ -313,7 +331,7 @@ FCV.kill(MiniMapTrackingButtonBorder) -- бордер на трекере
 FCV.kill(GameTimeFrame)
 FCV.kill(clockFrame)
 MinimapNorthTag:SetTexture(nil)
---clockFrame : Hide () ;	-- kill clock frame
+
 
 SLASH_RESETMINIMAP1 = "/rmmp"
 SLASH_RESETMINIMAP1 = "/resetmmp"
