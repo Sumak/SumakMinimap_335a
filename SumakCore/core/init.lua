@@ -23,12 +23,11 @@ LOC - локализация (введено, но хз пригодится л�
 ----------------------------------------------------------------
 
 -- including system
-local addon, engine = ...
-engine[1] = { } -- FCV, functions, constants, variables
-engine[2] = { } -- CFG, config
-engine[3] = { }-- LOC, localization
-
-SumakUI = engine -- Allow other addons to use Engine
+local ns = select(2,...)
+ns[1] = { } -- FCV, functions, constants, variables
+ns[2] = { } -- CFG, config
+ns[3] = { }-- LOC, localization
+_G.SumakUI = ns -- Allow other addons to use Engine
 
 local FCV, CFG, LOC = unpack(select(2, ...))
 
