@@ -3,7 +3,7 @@
 ---------------------------------------------
 local FCV, CFG, LOC = unpack(select(2, ...))
 
-mediapath = "Interface\\AddOns\\SumakMinimap\\core\\media\\"
+mediapath = "Interface\\AddOns\\SumakCore\\core\\media\\"
 
 CFG["media"] = {
 	---- fonts
