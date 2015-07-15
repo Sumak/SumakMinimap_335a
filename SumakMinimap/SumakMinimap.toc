@@ -4,15 +4,9 @@
 ## Notes: Minimap for World of Warcraft
 ## Notes-ruRU: Замена стандартной миникарты
 ## Author: Sumak
-## Version: 1.0.R024
+## Version: 1.0.R028
 ## X-Category: Minimap
 ## X-eMail: sumak.serge.m@gmail.com
+## RequiredDeps: SumakCore
 
-
-core\init.lua
-core\variable.lua
-core\slash.lua
-core\kill.lua
-core\media\media.lua
-core\frames.lua
 SumakMinimap.lua
