@@ -1,6 +1,12 @@
 ﻿---------------------------------------------
 -- minimap.lua
 ---------------------------------------------
+local ns = select(2,...)
+ns[1] = SumakUI[1]
+ns[2] = SumakUI[2]
+ns[3] = SumakUI[3]
+
+--local FCV, CFG, LOC = unpack(SumakUI)
 local FCV, CFG = unpack(select(2, ...))
 
 local minimap_size = 144
@@ -25,14 +31,13 @@ Minimap : SetClampedToScreen(true)
 
 ----add slash commnd 
 -------------------------------------------------
-
-
 SlashCmdList ["RESETMINIMAP"] = function () 
     Minimap : SetUserPlaced (false)
     ReloadUI ()
 end
 
-
+-------------------------------------------------
+----Испраление неверного положения тултипа
 do
     local function GetTipAnchor(frame)
         local x,y = frame:GetCenter()
@@ -50,6 +55,7 @@ do
         end
     end )
 end  
+
 
 ---- Addon Info
 -------------------------------------------------
