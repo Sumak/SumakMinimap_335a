@@ -4,7 +4,7 @@
 ## Notes: Engines
 ## Notes-ruRU: Основная библиотека
 ## Author: Sumak
-## Version: 1.0.R032
+## Version: 1.0.R033
 ## X-Category: Media
 ## X-eMail: sumak.serge.m@gmail.com
 ## SavedVariables: SumakUIData
