@@ -1,54 +1,92 @@
 ﻿---------------------------------------------
 -- minimap.lua
 ---------------------------------------------
+local ns = select(2,...)
+ns[1] = SumakUI[1]
+ns[2] = SumakUI[2]
+ns[3] = SumakUI[3]
+
+--local FCV, CFG, LOC = unpack(SumakUI)
 local FCV, CFG = unpack(select(2, ...))
 
 local minimap_size = 144
+local minimap_font = CFG.media.uffont
+local minimap_player_texture = CFG.media.minimaparrow
+local minimap_mailicon = CFG.media.mailicon
+local minimap_mask_texture = CFG.media.minimap_mask_texture
 local font_size = 13
 local anchor_point = 'TOPRIGHT' 
-local x = -25
-local y = -40
+local mmp_pos_x = -25
+local mmp_pos_y = -40
+local Minimap = Minimap
 
 Minimap : SetScale(1)
-Minimap : SetPlayerTexture (CFG.media.minimaparrow)
+Minimap : SetPlayerTexture (minimap_player_texture)
 Minimap : SetPlayerTextureHeight(36)
 Minimap : SetPlayerTextureWidth(36)
-FCV.backdrop = {
-	bgFile = CFG.media.bgfile,
-	--edgeFile = CFG.media.blank,
-	title = false,
-	tileSize = 0,
-	edgeSize = 0,
-	insets ={
-		left = 0,
-		right = 0,
-		top = 0,
-		bottom = 0
-	}
+Minimap : SetClampedToScreen(true)
 
-}
 ---- Config end
 -------------------------------------------------
-local function echo(str) print('|cfffef00fSumakMinimap |cff82e2eb' .. (str or '')) end
 
-Minimap : ClearAllPoints()
-Minimap : SetPoint (anchor_point, UIParent, x, y)
-GameTimeFrame : Hide()
+----add slash commnd 
+-------------------------------------------------
+SlashCmdList ["RESETMINIMAP"] = function () 
+    Minimap : SetUserPlaced (false)
+    ReloadUI ()
+end
 
 -------------------------------------------------
----- подложка под минимапу
-local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", false, false, false)
+----Испраление неверного положения тултипа
+do
+    local function GetTipAnchor(frame)
+        local x,y = frame:GetCenter()
+        if not x or not y then return "TOPLEFT", "BOTTOMLEFT" end
+        local hhalf = (x > UIParent:GetWidth() * 2/3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
+        local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
+        return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
+    end
+
+    MiniMapLFGFrame:HookScript("OnEnter", function(self, ...)
+        if LFDSearchStatus:IsShown() then
+            LFDSearchStatus:ClearAllPoints()
+            LFDSearchStatus:SetClampedToScreen(true)
+            LFDSearchStatus:SetPoint( GetTipAnchor(self) )
+        end
+    end )
+end  
+
+
+---- Addon Info
+-------------------------------------------------
+
+local function printAddonInfo ()
+	mem_usd = GetAddOnMemoryUsage("SumakMinimap")
+	mem = format("%.2f", mem_usd).." kB"
+	print('|cfffef00fSumakMinimap |cff82e2eb' .. (FCV.addon_version or '')) 
+	print('|cfffef00fMemory used: |cff82e2eb' .. (mem or '')) 
+end
+
+-------------------------------------------------
+---- minimap location
+Minimap : ClearAllPoints()
+Minimap : SetPoint (anchor_point, UIParent, mmp_pos_x, mmp_pos_y)
+
+-------------------------------------------------
+---- The frame for minimap
+local minimapframe = FCV.frame ("minimapframe", Minimap, 1, "BACKGROUND", true, true, true)
 	minimapframe : SetPoint ("TOPLEFT", -4, 4)
 	minimapframe : SetPoint ("BOTTOMRIGHT", 4, -4)
+	--minimapframe : SetClampedToScreen(true)
 
 -------------------------------------------------
 ---- The frame for zone
-local m_zone = FCV.frame ("m_zone", minimapframe, 1, "BACKGROUND", false, false, false)
+local m_zone = FCV.frame ("m_zone", minimapframe, 1, "BACKGROUND", true, true, true)
 	m_zone : SetSize (minimap_size+8, 20)
 	m_zone : SetPoint ("TOPLEFT", 0, 26)
 
 local m_zone_text = FCV.setfontstring (m_zone, 5, nil, nil, "CENTER")
-	m_zone_text : SetFont (CFG.media.uffont, font_size)
+	m_zone_text : SetFont (minimap_font, font_size)
 	m_zone_text : SetPoint ("Center", m_zone, 0, 0)
 	m_zone_text : SetJustifyH ("CENTER")
 	m_zone_text : SetJustifyV ("CENTER")
@@ -56,88 +94,74 @@ local m_zone_text = FCV.setfontstring (m_zone, 5, nil, nil, "CENTER")
 -------------------------------------------------
 ---- The frame for coordinates
 local m_coord = FCV.frame ("m_coord", minimapframe, 1, "LOW", true, true, true)
-	m_coord : SetSize (50, 24)
-	m_coord : SetPoint ("BOTTOM", minimap_size/4, 1)
+	m_coord : SetSize (72, 20)
+	m_coord : SetPoint ("TOPRIGHT", minimapframe, "BOTTOMRIGHT", 0, -6)
 
 local m_coord_text = FCV.setfontstring (m_coord, font_size, nil, nil, "CENTER")
 	m_coord_text : SetPoint ("CENTER", 0, 0)
 	m_coord_text : SetText ("00, 00")
 
--- сами координаты
 local ela = 0
+local floor = floor
+local GetPlayerMapPosition = GetPlayerMapPosition
 local coord_Update = function (self, t)
+	local form = function(x)
+		if floor (x*10+.5) < 1 then
+			return "0"
+		else
+			return ""
+		end
+	end
 	ela = ela - t
 	if ela > 0 then return end
-	local x, y = GetPlayerMapPosition ("player")
-	local xt, yt
-	x = math.floor (100 * x)
-	y = math.floor (100 * y)
-	if x == 0 and y == 0 then
-		m_coord_text : SetText("X _ X")
-	else
-		if x < 10 then
-			xt = "0"..x
-		else
-			xt = x
-		end
-		if y < 10 then
-			yt = "0"..y
-		else
-			yt = y
-		end
-		m_coord_text : SetText(xt..","..yt)
-	end
-	ela = .2
+	local x, y = GetPlayerMapPosition("player")
+	m_coord_text : SetFormattedText("%.1f"..form(x).."|cff00EEFF | |r"..form(y).."%.1f",x*100,y*100)
+	ela = .05
 end
-
 m_coord : SetScript("OnUpdate", coord_Update)
 -------------------------------------------------
 	
 -------------------------------------------------
 ---- The frame for mail
-local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW", true, true, true)
+local m_mail = FCV.frame ("m_mail", minimapframe, 3, "LOW")
 	m_mail : SetSize (24, 24)
 	m_mail : SetPoint ("TOP", 0, -5)
 	MiniMapMailFrame : ClearAllPoints()
-	MiniMapMailBorder : Hide()
 	MiniMapMailFrame : SetParent(m_mail)
 	MiniMapMailFrame : SetPoint('CENTER', m_mail, 'CENTER', 1, -2)
-	MiniMapMailIcon : SetTexture (CFG.media.mailicon)
+	MiniMapMailIcon : SetTexture (minimap_mailicon)
 -------------------------------------------------
 	
 -------------------------------------------------
 ---- The frame for LFG
-local m_LFG = FCV.frame ("m_LFG", minimapframe, 3, "LOW", true, true, true)
-	m_LFG : SetSize (24, 24)
-	m_LFG : SetPoint ("TOPRIGHT", -5, -5)
+local m_LFG_BG = FCV.frame ("m_LFG_BG", minimapframe, 3, "LOW")
+	m_LFG_BG : SetSize (24, 24)
+	m_LFG_BG : SetPoint ("BOTTOMLEFT", Minimap, "BOTTOMLEFT", 4, 4)
 
 	-------------------------------------------------
----- Reposition lfg icon at bottom-left
+----  LFG icon on LFG-frame
 local function UpdateLFG ()
-MiniMapLFGFrame:ClearAllPoints()
-MiniMapLFGFrame:SetPoint("CENTER", m_LFG, "CENTER", 0, 0)
-MiniMapLFGFrame : SetParent (m_LFG)
-MiniMapLFGFrame:SetHighlightTexture(nil)
-MiniMapLFGFrameBorder:Hide()
+MiniMapLFGFrame : ClearAllPoints()
+MiniMapLFGFrame : SetPoint("CENTER", m_LFG_BG, "CENTER", 0, 0)
+MiniMapLFGFrame : SetParent (m_LFG_BG)
+MiniMapLFGFrame : SetHighlightTexture(nil)
+MiniMapLFGFrameBorder : Hide()
 end
 hooksecurefunc ("MiniMapLFG_UpdateIsShown", UpdateLFG)
 
 -------------------------------------------------
----- The frame for BG
-local m_BG = FCV.frame ("m_BG", minimapframe, 3, "LOW", true, true, true)
-	m_BG : SetSize (24, 24)
-	m_BG : SetPoint ("TOPRIGHT", -5, -35)
+---- For BG
 	MiniMapBattlefieldFrame: ClearAllPoints()
-	MiniMapBattlefieldFrame : SetParent (m_BG)
-	MiniMapBattlefieldFrame : SetPoint ("CENTER", m_BG, "CENTER", 1, -2)
+	MiniMapBattlefieldFrame : SetParent (m_LFG_BG)
+	MiniMapBattlefieldFrame : SetPoint ("CENTER", m_LFG_BG, "CENTER", 1, -2)
 
-	-------------------------------------------------
+-------------------------------------------------
 ---- Tracking icon frame
-local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, true)
+local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW")
 	m_tracking : SetSize (24, 24)
 	m_tracking : SetPoint ("TOPLEFT", 5, -5)
 
-----tracking icon location
+----Tracking icon location
 	MiniMapTracking : ClearAllPoints ()
 	MiniMapTracking : SetParent (m_tracking)
 	MiniMapTracking : SetScale (1)
@@ -145,8 +169,8 @@ local m_tracking = FCV.frame ("m_tracking", minimapframe, 1, "LOW", true, true, 
 -------------------------------------------------
 
 -------------------------------------------------
----- левая панель для минимапы
-local minimap_ID = FCV.frame ("minimap_ID", minimapframe, 5, "LOW", true, true, true)
+---- MiniMapInstanceDifficulty frame
+local minimap_ID = FCV.frame ("minimap_ID", minimapframe, 5, "LOW")
 minimap_ID : SetSize (40, 40)
 minimap_ID : ClearAllPoints ()
 minimap_ID : SetPoint ("BOTTOMRIGHT", minimapframe, "TOPLEFT", -4, -40)
@@ -173,9 +197,9 @@ m_zone : SetScript ("OnEvent", zone_Update)
 ---- zone frame //
 -------------------------------------------------
 
-Minimap : SetScale(1)
 Minimap : SetSize (minimap_size, minimap_size)
-Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
+Minimap : SetMaskTexture(minimap_mask_texture)
+--Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
 Minimap : SetFrameStrata("BACKGROUND")
 Minimap : SetFrameLevel(3)
 ------------------------------------------	
@@ -202,22 +226,6 @@ Minimap : SetScript ("OnDragStart",
 Minimap : SetScript ("OnDragStop", 
 	function (self) self : StopMovingOrSizing () end)
 Minimap : SetUserPlaced (true)
-SlashCmdList ["RESETMINIMAP"] = function () 
-    Minimap : SetUserPlaced (false)
-    ReloadUI ()
-end
-
-------------------------------------------
--- destroy function
-FCV.kill = function(self, donthide, point)
-	if not self then return end
-	if self.UnregisterAllEvents then self:UnregisterAllEvents() end
-	if self.SetPoint and not(point) then self.SetPoint = FCV.null end
-	if self.Show then self.Show = FCV.null end
-	if not donthide then self:Hide() end
-	if self.Hide then self.Hide = FCV.null end
-end
-------------------------------------------
 
 ------------------------------------------
 -- Time
@@ -225,10 +233,15 @@ if not IsAddOnLoaded("Blizzard_TimeManager") then
 	LoadAddOn("Blizzard_TimeManager")
 end
 
+-- Timeframe
+local m_clockframe = FCV.frame ("m_clockframe", minimapframe, 1, "BACKGROUND", true, true, true)
+	m_clockframe : SetSize (48, 20)
+	m_clockframe : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
+--
 local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
-	clockFrame : Hide () ;	-- kill clock frame
-	clockTime : SetFont (CFG.media.uffont, font_size)
-	TimeManagerClockButton : SetPoint ("CENTER", minimapframe, "BOTTOM", -minimap_size/4, 12)
+	clockTime : SetFont (minimap_font, font_size)
+	TimeManagerClockButton : SetPoint ("CENTER", m_clockframe, 0, 0)
+	--TimeManagerClockButton : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
 	TimeManagerClockButton : SetScript ("OnMouseDown", function(_,click)
 		if click == "RightButton" then
 		if not CalendarFrame then
@@ -237,8 +250,31 @@ local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 			CalendarFrame : Show ()
 		end
 	end)
--- Time	
+---- Timeframe	----
 ------------------------------------------
+
+------------------------------------------	
+ ---- MiniMap Config button
+ 
+local minimap_cfg = FCV.frame ("minimap_cfg", minimapframe, 5, "LOW", true, true, true )
+	minimap_cfg : SetSize (20, 20)
+	minimap_cfg : EnableMouse(true)
+	minimap_cfg : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 54, -6)
+	minimap_cfg : SetScript ("OnEnter", function(self)
+		GameTooltip : SetOwner(self, "ANCHOR_BOTTOMLEFT")
+		GameTooltip : ClearAllPoints()
+		GameTooltip : SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -2)
+		GameTooltip : ClearLines ()
+		GameTooltip : SetText ("MiniMap config")  -- This sets the top line of text, in gold.
+		GameTooltip : AddLine ("MiniMap config в процессе \nразработки", 1, 1, 1)
+		GameTooltip : Show ()
+end)
+
+minimap_cfg : SetScript ("OnLeave", function() GameTooltip : Hide() end)
+
+local minimap_cfg_text = FCV.setfontstring (minimap_cfg, font_size, nil, nil, "CENTER")
+	minimap_cfg_text : SetPoint ("CENTER", -1, 0)
+	minimap_cfg_text : SetText ("|cff00EEFFC")
 
  
 ------------------------------------------	
@@ -281,8 +317,9 @@ Minimap : SetScript("OnMouseUp", function(self, button)
 	end
 end)
   
- if IsAddOnLoaded("SumakMinimap") then
-	echo ('Версия '.. GetAddOnMetadata ('SumakMinimap', 'Version') .. ' by Sumak ')
+if IsAddOnLoaded("SumakMinimap") then
+	UpdateAddOnMemoryUsage()
+	printAddonInfo ()
 end
  
  ------------------------------------------
@@ -302,6 +339,9 @@ FCV.kill(MiniMapBattlefieldBorder)
 FCV.kill(MiniMapTrackingBackground) -- бекграунд на трекере
 FCV.kill(MiniMapTrackingButtonBorder) -- бордер на трекере
 FCV.kill(GameTimeFrame)
+FCV.kill(clockFrame)
+MinimapNorthTag:SetTexture(nil)
+
 
 SLASH_RESETMINIMAP1 = "/rmmp"
 SLASH_RESETMINIMAP1 = "/resetmmp"

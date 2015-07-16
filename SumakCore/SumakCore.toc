@@ -1,0 +1,19 @@
+﻿## Interface: 30300
+## Title: |cffFF5821SumakCore|r
+## Title-ruRU: |cffFF5821SumakCore|r
+## Notes: Engines
+## Notes-ruRU: Основная библиотека
+## Author: Sumak
+## Version: 1.0.R033
+## X-Category: Media
+## X-eMail: sumak.serge.m@gmail.com
+## SavedVariables: SumakUIData
+
+
+core\init.lua
+core\variable.lua
+core\slash.lua
+core\kill.lua
+core\media\media.lua
+core\frames.lua
+

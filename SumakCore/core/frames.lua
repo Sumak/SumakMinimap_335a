@@ -3,6 +3,21 @@
 ------------------------------------------------------------------------
 local FCV, CFG = unpack(select(2, ...))
 
+FCV.backdrop = {
+	bgFile = CFG.media.bgfile,
+	--edgeFile = CFG.media.blank,
+	title = false,
+	tileSize = 0,
+	edgeSize = 0,
+	insets ={
+		left = 0,
+		right = 0,
+		top = 0,
+		bottom = 0
+	}
+
+}
+
 -- Style Frame
 FCV.style = function (myframe,nobg,offset)
 	
@@ -45,7 +60,7 @@ FCV.setshadow = function (myframe)
 end	
 
 ---- создание фреймов
-FCV.frame = function (f_name, parent, level, strata, nobg, noshadow, border, offset, alpha)
+FCV.frame = function (f_name, parent, level, strata, bg, shadow, border, offset, alpha)
 	local myframe = CreateFrame ("Frame", f_name, parent)
 -- если не указан уровень фрейма
 	if level ~=true then
@@ -53,9 +68,9 @@ FCV.frame = function (f_name, parent, level, strata, nobg, noshadow, border, off
 		myframe : SetFrameStrata (strata)
 	end
 --если с бекдропом (заливка)
-	if nobg ~= true then FCV.setbackdrop (myframe) end
-	if noshadow ~= true then FCV.setshadow (myframe) end
-	----
+	if bg == true then FCV.setbackdrop (myframe) end
+	if shadow == true then FCV.setshadow (myframe) end
+----
 	return myframe
 end
 

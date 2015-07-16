@@ -1,17 +1,12 @@
 ﻿## Interface: 30300
 ## Title: |cffFF5821SumakMinimap|r
 ## Title-ruRU: |cffFF5821SumakMinimap|r
-## Notes: "SumakMinimap"
-## Notes-ruRU: "SumakMinimap"
+## Notes: Minimap for World of Warcraft
+## Notes-ruRU: Замена стандартной миникарты
 ## Author: Sumak
-## Version: 1.0.R005
+## Version: 1.0.R033
 ## X-Category: Minimap
 ## X-eMail: sumak.serge.m@gmail.com
+## RequiredDeps: SumakCore
 
-
-core\init.lua
-core\variable.lua
-core\reloadui.lua
-media\media.lua
-core\frames.lua
 SumakMinimap.lua
