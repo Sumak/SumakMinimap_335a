@@ -63,8 +63,9 @@ end
 local function printAddonInfo ()
 	mem_usd = GetAddOnMemoryUsage("SumakMinimap")
 	mem = format("%.2f", mem_usd).." kB"
-	print('|cfffef00fSumakMinimap |cff82e2eb' .. (FCV.addon_version or '')) 
-	print('|cfffef00fMemory used: |cff82e2eb' .. (mem or '')) 
+	print('|cfffef00fSumakMinimap |cff82e2eb' .. (FCV.addon_version or '' .. "-загружен")) 
+	print('|cfffef00fСпециально для WOWCIRLE') 
+	print('|cfffef00fИспользование памяти: |cff82e2eb' .. (mem or '')) 
 end
 
 -------------------------------------------------
@@ -199,7 +200,6 @@ m_zone : SetScript ("OnEvent", zone_Update)
 
 Minimap : SetSize (minimap_size, minimap_size)
 Minimap : SetMaskTexture(minimap_mask_texture)
---Minimap : SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
 Minimap : SetFrameStrata("BACKGROUND")
 Minimap : SetFrameLevel(3)
 ------------------------------------------	
