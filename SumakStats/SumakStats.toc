@@ -1,0 +1,12 @@
+﻿## Interface: 30300
+## Title: |cffFF5821SumakStats|r
+## Title-ruRU: |cffFF5821SumakStats|r
+## Notes: Inform-panels
+## Notes-ruRU: Информ-панели
+## Author: Sumak
+## Version: 1.0.R024
+## Credits to: AlleyCat, Alt, Tukz, Захарчик, Neko, Foximys
+## X-eMail: sumak.serge.m@gmail.com
+## RequiredDeps: SumakCore
+
+StatsCore.lua
