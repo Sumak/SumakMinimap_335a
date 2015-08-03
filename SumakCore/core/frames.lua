@@ -64,8 +64,11 @@ FCV.frame = function (f_name, parent, level, strata, bg, shadow, border, offset,
 	local myframe = CreateFrame ("Frame", f_name, parent)
 -- если не указан уровень фрейма
 	if level ~=true then
-		myframe : SetFrameLevel(1)
-		myframe : SetFrameStrata (strata)
+--		myframe : SetFrameLevel(1)
+--		myframe : SetFrameStrata (strata)
+		
+		myframe:SetFrameLevel(level or 2)
+		myframe:SetFrameStrata(strata or "BACKGROUND")
 	end
 --если с бекдропом (заливка)
 	if bg == true then FCV.setbackdrop (myframe) end
