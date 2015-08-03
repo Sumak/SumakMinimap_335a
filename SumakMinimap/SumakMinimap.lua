@@ -56,18 +56,6 @@ do
     end )
 end  
 
-
----- Addon Info
--------------------------------------------------
-
-local function printAddonInfo ()
-	mem_usd = GetAddOnMemoryUsage("SumakMinimap")
-	mem = format("%.2f", mem_usd).." kB"
-	print('|cfffef00fSumakMinimap |cff82e2eb' .. (FCV.addon_version or '' .. "-загружен")) 
-	print('|cfffef00fСпециально для WOWCIRLE') 
-	print('|cfffef00fИспользование памяти: |cff82e2eb' .. (mem or '')) 
-end
-
 -------------------------------------------------
 ---- minimap location
 Minimap : ClearAllPoints()
@@ -254,7 +242,7 @@ local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 ------------------------------------------
 
 ------------------------------------------	
- ---- MiniMap Config button
+---- MiniMap Config button
  
 local minimap_cfg = FCV.frame ("minimap_cfg", minimapframe, 5, "LOW", true, true, true )
 	minimap_cfg : SetSize (20, 20)
@@ -317,9 +305,11 @@ Minimap : SetScript("OnMouseUp", function(self, button)
 	end
 end)
   
-if IsAddOnLoaded("SumakMinimap") then
-	UpdateAddOnMemoryUsage()
-	printAddonInfo ()
+-------------------------------------------------
+---- Аддон Инфо
+	
+if IsAddOnLoaded ("SumakMinimap") then
+	FCV.PrintAddonInfo ("SumakMinimap")
 end
  
  ------------------------------------------
