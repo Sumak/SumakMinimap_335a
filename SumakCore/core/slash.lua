@@ -1,6 +1,14 @@
 ------------------------------------------------------------------------
 --	ReloadUI command
 ------------------------------------------------------------------------
+local ns = select(2,...)
+ns[1] = SumakUI[1] -- FCV
+ns[2] = SumakUI[2] -- CFG
+
+local FCV, CFG = unpack(select(2, ...))
+
+----перезагрузка UI
+-------------------------------------------------
 SlashCmdList.RELOADUI = ReloadUI
 
 SLASH_RELOADUI1 = "/rl"
@@ -9,7 +17,10 @@ SLASH_RELOADUI2 = "/кд"
 ----исправление невыхода из группы 
 -------------------------------------------------
 local PartyBye = function () 
-    LeaveParty()
+	if GetNumPartyMembers() >0 then
+		LeaveParty()
+	else FCV.ChatAlert("Вы не состоите в группе!")
+	end
 end
 
 SlashCmdList.Leave_Party = PartyBye
