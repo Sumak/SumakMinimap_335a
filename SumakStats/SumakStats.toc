@@ -5,7 +5,7 @@
 ## Notes-ruRU: Информ-панели
 ## Author: Sumak
 ## Version: 1.0.R041
-## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra
+## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra, AlleyCat, Alt, Tukz, DreamlØlz
 ## X-eMail: sumak.serge.m@gmail.com
 ## RequiredDeps: SumakCore
 

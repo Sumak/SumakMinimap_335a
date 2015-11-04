@@ -1,13 +1,13 @@
 ﻿## Interface: 30300
 ## Title: |cffFF5821SumakCore|r
 ## Title-ruRU: |cffFF5821SumakCore|r
-## Notes: Engines
+## Notes: SumakUI Engine
 ## Notes-ruRU: Основная библиотека
 ## Author: Sumak
-## Version: 1.0.R041
-## X-Category: Media
+## Version: 1.0.R042
+## X-Category: Media Libs
 ## X-eMail: sumak.serge.m@gmail.com
-## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra
+## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra, AlleyCat, Alt, Tukz, DreamlØlz
 ## SavedVariables: SumakUIData
 
 
@@ -18,4 +18,5 @@ core\slash.lua
 core\kill.lua
 core\media\media.lua
 core\frames.lua
+core\func.lua
 

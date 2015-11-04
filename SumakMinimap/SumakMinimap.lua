@@ -176,7 +176,10 @@ local GetMinimapZoneText = GetMinimapZoneText
 	
 local zone_Update = function()
 	local z_text  = GetMinimapZoneText ()
-	m_zone_text : SetText (z_text)
+	-- исправление длинного наименования локации 
+	local z_text_long = 22
+	m_zone_text : SetText (FCV.trimString (z_text, z_text_long, 1))
+	--m_zone_text : SetText (z_text)
 	local pvp = GetZonePVPInfo() or "none"
 	local r, g, b = unpack (CFG.territory_colors[pvp])
 	m_zone_text : SetTextColor (r, g, b)

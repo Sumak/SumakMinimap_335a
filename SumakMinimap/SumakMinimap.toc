@@ -4,10 +4,10 @@
 ## Notes: Minimap for World of Warcraft
 ## Notes-ruRU: Замена стандартной миникарты
 ## Author: Sumak
-## Version: 1.0.R041
+## Version: 1.0.R042
 ## X-Category: Minimap
 ## X-eMail: sumak.serge.m@gmail.com
-## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra
+## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra, AlleyCat, Alt, Tukz, DreamlØlz
 ## RequiredDeps: SumakCore
 
 SumakMinimap.lua
