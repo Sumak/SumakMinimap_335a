@@ -27,7 +27,7 @@ local ns = select(2,...)
 ns[1] = { } -- FCV, functions, constants, variables
 ns[2] = { } -- CFG, config
 ns[3] = { }-- LOC, localization
-_G.SumakUI = ns -- Allow other addons to use Engine
+_G.SumakDB = ns -- Allow other addons to use Engine
 
-local FCV, CFG, LOC = unpack(select(2, ...))
+local FCV, CFG, LOC = unpack(_G.SumakDB)
 
