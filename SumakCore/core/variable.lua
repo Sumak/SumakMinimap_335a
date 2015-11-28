@@ -1,7 +1,7 @@
 ---------------------------------------------
 -- variable.lua
 ---------------------------------------------
-local FCV, CFG, LOC = unpack(select(2, ...))
+local FCV, CFG, LOC = unpack(_G.SumakDB)
 
 CFG.territory_colors = {
 	["friendly"] = {0.1, 1.0, 0.1},
@@ -22,7 +22,7 @@ FCV.client = GetLocale()
 FCV.resolution = GetCVar("gxResolution")
 FCV.screenheight = tonumber(string.match(FCV.resolution, "%d+x(%d+)"))
 FCV.screenwidth = tonumber(string.match(FCV.resolution, "(%d+)x+%d"))
-FCV.addon_version = GetAddOnMetadata("SumakMinimap", "Version")
+FCV.addon_version = GetAddOnMetadata("SumakCore", "Version")
 FCV.addon_versionnumber = tonumber(FCV.addon_version)
 FCV.incombat = UnitAffectingCombat("player")
 FCV.patch, FCV.buildtext, FCV.releasedate, FCV.toc = GetBuildInfo()
