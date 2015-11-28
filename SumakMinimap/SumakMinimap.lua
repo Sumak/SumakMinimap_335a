@@ -1,13 +1,13 @@
 ﻿---------------------------------------------
 -- minimap.lua
 ---------------------------------------------
-local ns = select(2,...)
-ns[1] = SumakUI[1]
-ns[2] = SumakUI[2]
-ns[3] = SumakUI[3]
+--local ns = select(2,...)
+--ns[1] = SumakUI[1]
+--ns[2] = SumakUI[2]
+--ns[3] = SumakUI[3]
 
 --local FCV, CFG, LOC = unpack(SumakUI)
-local FCV, CFG = unpack(select(2, ...))
+local FCV, CFG = unpack(_G.SumakDB)
 
 local minimap_size = 144
 local minimap_font = CFG.media.uffont
@@ -40,18 +40,18 @@ end
 ----Испраление неверного положения тултипа
 do
     local function GetTipAnchor(frame)
-        local x,y = frame:GetCenter()
+        local x,y = frame : GetCenter()
         if not x or not y then return "TOPLEFT", "BOTTOMLEFT" end
         local hhalf = (x > UIParent:GetWidth() * 2/3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
         local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
         return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
     end
 
-    MiniMapLFGFrame:HookScript("OnEnter", function(self, ...)
-        if LFDSearchStatus:IsShown() then
-            LFDSearchStatus:ClearAllPoints()
-            LFDSearchStatus:SetClampedToScreen(true)
-            LFDSearchStatus:SetPoint( GetTipAnchor(self) )
+    MiniMapLFGFrame : HookScript("OnEnter", function(self, ...)
+        if LFDSearchStatus : IsShown() then
+            LFDSearchStatus : ClearAllPoints()
+            LFDSearchStatus : SetClampedToScreen(true)
+            LFDSearchStatus : SetPoint( GetTipAnchor(self) )
         end
     end )
 end  
@@ -94,7 +94,7 @@ local ela = 0
 local floor = floor
 local GetPlayerMapPosition = GetPlayerMapPosition
 local coord_Update = function (self, t)
-	local form = function(x)
+	local form = function (x)
 		if floor (x*10+.5) < 1 then
 			return "0"
 		else
@@ -103,11 +103,11 @@ local coord_Update = function (self, t)
 	end
 	ela = ela - t
 	if ela > 0 then return end
-	local x, y = GetPlayerMapPosition("player")
-	m_coord_text : SetFormattedText("%.1f"..form(x).."|cff00EEFF | |r"..form(y).."%.1f",x*100,y*100)
+	local x, y = GetPlayerMapPosition ("player")
+	m_coord_text : SetFormattedText ("%.1f"..form(x).."|cff00EEFF | |r"..form(y).."%.1f",x*100,y*100)
 	ela = .05
 end
-m_coord : SetScript("OnUpdate", coord_Update)
+m_coord : SetScript ("OnUpdate", coord_Update)
 -------------------------------------------------
 	
 -------------------------------------------------
@@ -190,9 +190,9 @@ m_zone : SetScript ("OnEvent", zone_Update)
 -------------------------------------------------
 
 Minimap : SetSize (minimap_size, minimap_size)
-Minimap : SetMaskTexture(minimap_mask_texture)
-Minimap : SetFrameStrata("BACKGROUND")
-Minimap : SetFrameLevel(3)
+Minimap : SetMaskTexture (minimap_mask_texture)
+Minimap : SetFrameStrata ("BACKGROUND")
+Minimap : SetFrameLevel (3)
 ------------------------------------------	
 -- Масшбирование минимапы 
 -- при MouseWheel
@@ -228,7 +228,7 @@ end
 local m_clockframe = FCV.frame ("m_clockframe", minimapframe, 1, "BACKGROUND", true, true, true)
 	m_clockframe : SetSize (48, 20)
 	m_clockframe : SetPoint ("TOPLEFT", minimapframe, "BOTTOMLEFT", 0, -6)
---
+
 local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 	clockTime : SetFont (minimap_font, font_size)
 	TimeManagerClockButton : SetPoint ("CENTER", m_clockframe, 0, 0)
@@ -241,7 +241,7 @@ local clockFrame, clockTime = TimeManagerClockButton:GetRegions()
 			CalendarFrame : Show ()
 		end
 	end)
----- Timeframe	----
+---- Timeframe ----
 ------------------------------------------
 
 ------------------------------------------	
@@ -300,11 +300,11 @@ local menuList = {
     end},
 }
 
-Minimap : SetScript("OnMouseUp", function(self, button)
+Minimap : SetScript ("OnMouseUp", function(self, button)
 	if button == "RightButton" and not InCombatLockdown() then
-		EasyMenu(menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
+		EasyMenu (menuList, menuFrame, "cursor", 0, 0, "MENU", 2)
 	else
-		Minimap_OnClick(self)
+		Minimap_OnClick (self)
 	end
 end)
   
@@ -318,28 +318,28 @@ end
  ------------------------------------------
 -- Скрываем минимапбордеры
 
-FCV.kill(WatchFrame)		--список задач
-FCV.kill(MinimapBorderTop) -- hide minimap border
-FCV.kill(MinimapBorder)	   -- hide minimap border
-FCV.kill(MinimapNorthTag)
-FCV.kill(MinimapZoneTextButton)
-FCV.kill(MinimapZoomOut)	-- hide zoom button
-FCV.kill(MinimapZoomIn)	-- hide zoom button
-FCV.kill(MiniMapVoiceChatFrame)	-- Hide Voice Chat Frame
-FCV.kill(MiniMapWorldMapButton)
-FCV.kill(MiniMapMailBorder)	-- hide mail border
-FCV.kill(MiniMapBattlefieldBorder)
-FCV.kill(MiniMapTrackingBackground) -- бекграунд на трекере
-FCV.kill(MiniMapTrackingButtonBorder) -- бордер на трекере
-FCV.kill(GameTimeFrame)
-FCV.kill(clockFrame)
-MinimapNorthTag:SetTexture(nil)
+FCV.kill (WatchFrame)		--список задач
+FCV.kill (MinimapBorderTop) -- hide minimap border
+FCV.kill (MinimapBorder)	   -- hide minimap border
+FCV.kill (MinimapNorthTag)
+FCV.kill (MinimapZoneTextButton)
+FCV.kill (MinimapZoomOut)	-- hide zoom button
+FCV.kill (MinimapZoomIn)	-- hide zoom button
+FCV.kill (MiniMapVoiceChatFrame)	-- Hide Voice Chat Frame
+FCV.kill (MiniMapWorldMapButton)
+FCV.kill (MiniMapMailBorder)	-- hide mail border
+FCV.kill (MiniMapBattlefieldBorder)
+FCV.kill (MiniMapTrackingBackground) -- бекграунд на трекере
+FCV.kill (MiniMapTrackingButtonBorder) -- бордер на трекере
+FCV.kill (GameTimeFrame)
+FCV.kill (clockFrame)
+MinimapNorthTag : SetTexture (nil)
 
 
 SLASH_RESETMINIMAP1 = "/rmmp"
 SLASH_RESETMINIMAP1 = "/resetmmp"
 
-m_zone:RegisterEvent("PLAYER_ENTERING_WORLD")
-m_zone:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-m_zone:RegisterEvent("ZONE_CHANGED")
-m_zone:RegisterEvent("ZONE_CHANGED_INDOORS")
+m_zone : RegisterEvent ("PLAYER_ENTERING_WORLD")
+m_zone : RegisterEvent ("ZONE_CHANGED_NEW_AREA")
+m_zone : RegisterEvent ("ZONE_CHANGED")
+m_zone : RegisterEvent ("ZONE_CHANGED_INDOORS")
