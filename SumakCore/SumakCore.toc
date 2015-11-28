@@ -4,7 +4,7 @@
 ## Notes: SumakUI Engine
 ## Notes-ruRU: Основная библиотека
 ## Author: Sumak
-## Version: 1.0.R042
+## Version: 1.1R049
 ## X-Category: Media Libs
 ## X-eMail: sumak.serge.m@gmail.com
 ## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra, AlleyCat, Alt, Tukz, DreamlØlz
@@ -16,7 +16,7 @@ core\variable.lua
 core\chatalert.lua
 core\slash.lua
 core\kill.lua
-core\media\media.lua
+media\media.lua
 core\frames.lua
 core\func.lua
-
+modules\grid.lua
