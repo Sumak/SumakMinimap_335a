@@ -2,7 +2,7 @@
 -- func.lua
 ---------------------------------------------
 
-local FCV, CFG, LOC = unpack(SumakUI)
+local FCV, CFG, LOC = unpack(SumakDB)
 local str
 
 local str_len = string.len
