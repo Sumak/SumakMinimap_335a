@@ -1,7 +1,7 @@
 ---------------------------------------------
 ---- media.lua
 ---------------------------------------------
-local FCV, CFG, LOC = unpack(select(2, ...))
+local FCV, CFG = unpack(SumakDB)
 
 mediapath = "Interface\\AddOns\\SumakCore\\media\\"
 

@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------
 --	frames.lua
 ------------------------------------------------------------------------
-local FCV, CFG = unpack(select(2, ...))
+local FCV, CFG = unpack(SumakDB)
 
 FCV.backdrop = {
 	bgFile = CFG.media.bgfile,

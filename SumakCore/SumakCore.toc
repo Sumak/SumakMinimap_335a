@@ -4,7 +4,7 @@
 ## Notes: SumakUI Engine
 ## Notes-ruRU: Основная библиотека
 ## Author: Sumak
-## Version: 1.1R049
+## Version: 1.1R050
 ## X-Category: Media Libs
 ## X-eMail: sumak.serge.m@gmail.com
 ## X-Credits: Захарчик, Neko, Foximys, Сид, Саяра, Tiers, Aliestra, AlleyCat, Alt, Tukz, DreamlØlz

@@ -10,7 +10,6 @@ local grid
 
 local to_hide = function (self)
 	if self.hiding == true then return end
-	--UIFrameFadeOut (grid, 5, 1, 0)
 	self : Hide()
 	self.showing = false
 end
@@ -25,7 +24,6 @@ end
 ---- Make GRID  -----
 function FCV.Grid_Create () 
 	grid = CreateFrame ('Frame', 'UIGrid', UIParent) 
-	print ("Сетка создана!!!")
 	grid : SetAllPoints (UIParent) 
 	grid.hide = to_hide
 	grid.show = to_show

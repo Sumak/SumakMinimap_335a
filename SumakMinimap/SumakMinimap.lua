@@ -1,12 +1,6 @@
 ﻿---------------------------------------------
 -- minimap.lua
 ---------------------------------------------
---local ns = select(2,...)
---ns[1] = SumakUI[1]
---ns[2] = SumakUI[2]
---ns[3] = SumakUI[3]
-
---local FCV, CFG, LOC = unpack(SumakUI)
 local FCV, CFG = unpack(_G.SumakDB)
 
 local minimap_size = 144

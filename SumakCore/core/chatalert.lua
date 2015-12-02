@@ -2,7 +2,6 @@
 --ChatAlert.lua
 ---------------------------------------------
 
---local FCV, CFG = unpack(select(2, ...))
 local FCV, CFG = unpack(SumakDB)
 
 local addon_version = GetAddOnMetadata("SumakCore", "Version")
